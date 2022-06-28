@@ -17,13 +17,16 @@ current_dir: str
 max_results: int = 100
 
 # List of valid result types
-result_types: List[str] = ["images", "videos", "media", "all"]
+result_types: List[str] = ["images", "videos", "audio", "media", "all"]
 
 # List of valid image extensions
 image_exts: List[str] = [".jpg", ".png", ".gif"]
 
 # List of valid video extensions
 video_exts: List[str] = [".mp4", ".webm", ".mkv"]
+
+# List of valid audio extensions
+audio_exts: List[str] = [".mp3", ".ogg", ".flac", ".wav", ".aiff", ".m4a"]
 
 # The path were the symlinks are created
 results_path: str = "/tmp/symview_results"
@@ -76,8 +79,10 @@ def main() -> None:
       include = ext in image_exts
     elif result_type == "videos":
       include = ext in video_exts
+    elif result_type == "audio":
+      include = ext in audio_exts
     elif result_type in "media":
-      include = ext in image_exts or video_exts
+      include = (ext in image_exts) or (ext in video_exts) or (ext in audio_exts)
     elif result_type == "all":
       include = True
   

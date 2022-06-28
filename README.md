@@ -13,7 +13,8 @@ It ignores directories with dots at the start.
 Valid result types: 
 * images (jpg, png, gif)
 * videos (mp4, webm, mkv)
-* media (images and videos)
+* audio (mp3, ogg, flac, wav, aiff, m4a)
+* media (images and videos and audio)
 * all (anything)
 
 Fish functions:  
