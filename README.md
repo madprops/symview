@@ -1,4 +1,4 @@
-<img src="https://i.imgur.com/PyXJEqi.jpg" width="300">
+<img src="https://i.imgur.com/PyXJEqi.jpg" width="350">
 
 # Symbolic Link Snapshots
 
@@ -7,7 +7,7 @@ If you go to a parent directory and run:
 
 It performs a recursive file name search.  
 All the results (up to a max of 100) will be symlinked to /tmp/symview_results.  
-Now you have images/videos/files available to view and use.  
+Now you have images/videos/documents available to view and use.  
 It ignores directories with dots at the start.  
 
 Valid result types: 
