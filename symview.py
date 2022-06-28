@@ -3,6 +3,7 @@ from os import getenv, execvp
 from pathlib import Path
 from typing import List
 from glob import glob
+import subprocess
 
 # Type of results
 result_type: str
@@ -119,6 +120,9 @@ def main() -> None:
         continue
 
       link.symlink_to(src)
+
+    # Open the file manager
+    subprocess.call(["xdg-open", results_path])
   
 # Program starts here
 if __name__ == "__main__": main()
