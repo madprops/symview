@@ -9,6 +9,7 @@ It performs a recursive file name search.
 All the results (up to a max of 100) will be symlinked to /tmp/symview_results.  
 Now you have images/videos/documents available to view and use.  
 It ignores directories with dots at the start.  
+It ignores directories and symlinks.
 
 Valid result types: 
 * images (jpg, png, gif)

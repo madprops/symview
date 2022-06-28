@@ -88,10 +88,11 @@ def main() -> None:
       include = True
   
     if include:
-      if f not in results:
-        results.append(f)
-        if len(results) >= max_results:
-          break
+      if p.is_file() and not p.is_symlink():
+        if f not in results:
+          results.append(f)
+          if len(results) >= max_results:
+            break
     
   if len(results) > 0:
     rp = Path(results_path)
