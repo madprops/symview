@@ -1,0 +1,37 @@
+<img src="https://i.imgur.com/PyXJEqi.jpg" width="300">
+
+# Symbolic Link Snapshots
+
+If you go to a parent directory and run:  
+`python /path/to/symview.py images dinosaur`  
+
+It performs a recursive file name search.  
+All the results (up to a max of 100) will be symlinked to /tmp/symview_results.  
+Now you have images/videos/files available to view and use.  
+It ignores directories with dots at the start.  
+
+Valid result types: 
+* images (jpg, png, gif)
+* videos (mp4, webm, mkv)
+* media (images and videos)
+* all (anything)
+
+Fish functions:  
+
+```  
+function i  
+python /home/yo/code/symview/symview.py images "$argv"  
+end  
+
+function v  
+python /home/yo/code/symview/symview.py videos "$argv"  
+end  
+
+function m  
+python /home/yo/code/symview/symview.py media "$argv"  
+end  
+
+function a  
+python /home/yo/code/symview/symview.py all "$argv"  
+end  
+```
