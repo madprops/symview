@@ -3,6 +3,7 @@ from os import getenv, execvp
 from pathlib import Path
 from typing import List
 from glob import glob
+from mimetypes import guess_type
 import subprocess
 
 # Type of results
@@ -19,15 +20,6 @@ max_results: int = 100
 
 # List of valid result types
 result_types: List[str] = ["images", "videos", "audio", "media", "all"]
-
-# List of valid image extensions
-image_exts: List[str] = [".jpg", ".png", ".gif"]
-
-# List of valid video extensions
-video_exts: List[str] = [".mp4", ".webm", ".mkv"]
-
-# List of valid audio extensions
-audio_exts: List[str] = [".mp3", ".ogg", ".flac", ".wav", ".aiff", ".m4a"]
 
 # The path were the symlinks are created
 results_path: str = "/tmp/symview_results"
@@ -55,6 +47,11 @@ def get_args() -> None:
   keyword = " ".join(argv[2:])
   current_dir = clean_path(str(getenv("PWD")))
 
+# Check if file is of a certain type
+def is_type(t, f):
+  g = guess_type(f)[0]
+  return g and g.startswith(t)
+
 # Main function
 def main() -> None:
   get_args()
@@ -74,16 +71,21 @@ def main() -> None:
     p = Path(f)
 
     include = False
-    ext = p.suffix.lower()
 
     if result_type == "images":
-      include = ext in image_exts
+      include = is_type("image", f)
+
     elif result_type == "videos":
-      include = ext in video_exts
+      include = is_type("video", f)
+
     elif result_type == "audio":
-      include = ext in audio_exts
+      include = is_type("audio", f)
+
     elif result_type in "media":
-      include = (ext in image_exts) or (ext in video_exts) or (ext in audio_exts)
+      include = is_type("image", f) or \
+                is_type("video", f) or \
+                is_type("audio", f)
+
     elif result_type == "all":
       include = True
   

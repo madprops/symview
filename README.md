@@ -12,11 +12,11 @@ It ignores directories with dots at the start.
 It ignores directories and symlinks.
 
 Valid result types: 
-* images (jpg, png, gif)
-* videos (mp4, webm, mkv)
-* audio (mp3, ogg, flac, wav, aiff, m4a)
-* media (images and videos and audio)
-* all (anything)
+* images
+* videos
+* audio
+* media
+* all
 
 Fish functions:  
 
