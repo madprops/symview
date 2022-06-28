@@ -20,19 +20,19 @@ Valid result types:
 Fish functions:  
 
 ```  
-function i  
-python /home/yo/code/symview/symview.py images "$argv"  
-end  
+function i
+  python /home/yo/code/symview/symview.py images "$argv"
+end
 
-function v  
-python /home/yo/code/symview/symview.py videos "$argv"  
-end  
+function v
+  python /home/yo/code/symview/symview.py videos "$argv"
+end
 
-function m  
-python /home/yo/code/symview/symview.py media "$argv"  
-end  
+function a
+  python /home/yo/code/symview/symview.py audio "$argv"
+end
 
-function a  
-python /home/yo/code/symview/symview.py all "$argv"  
-end  
+function m
+  python /home/yo/code/symview/symview.py media "$argv"
+end
 ```
