@@ -11,7 +11,7 @@ All the results (up to a max of 100) will be symlinked to /tmp/symview_results.
 The symlink directory is opened with your file manager.  
 Now you have linked files available to view and use.  
 It ignores directories with dots at the start.  
-It ignores directories and symlinks.
+It ignores directories and symlinks.  
 If no query is provided it asks with rofi.
 
 Valid result types: 
