@@ -5,16 +5,11 @@ from typing import List
 from glob import glob
 from mimetypes import guess_type
 from subprocess import Popen, PIPE
+from typing_extensions import TypedDict
 import subprocess
 
-# Type of results
-result_type: str
-
-# Search query
-query: str
-
-# Current working directory
-current_dir: str
+# Arguments type declaration
+Args = TypedDict("Args", {"type": str, "query": str})
 
 # Max number of results
 max_results: int = 100
@@ -29,17 +24,17 @@ results_path: str = "/tmp/symview_results"
 def clean_path(path: str) -> str:
   return path.rstrip("/")
 
+# Get current working directory
+def pwd() -> str:
+  return clean_path(str(getenv("PWD")))
+
 # Get input information using rofi
 def get_input(prompt: str) -> str:
   proc = Popen(f"rofi -dmenu -p {prompt}", stdout=PIPE, stdin=PIPE, shell=True, text=True)
   return proc.communicate()[0].strip()
 
 # Get arguments. Might exit here
-def get_args() -> None:
-  global query
-  global result_type
-  global current_dir
-
+def get_args() -> Args:
   if (len(argv) < 2):
     exit()
 
@@ -58,7 +53,7 @@ def get_args() -> None:
   if query == "":
     exit()
 
-  current_dir = clean_path(str(getenv("PWD")))
+  return {"type": result_type, "query": query}
 
 # Check if file is of a certain type
 def is_type(t: str, f: str) -> bool:
@@ -70,12 +65,14 @@ def is_type(t: str, f: str) -> bool:
     return False
 
 # Get file matches
-def get_results() -> List[str]:
+def get_results(args: Args) -> List[str]:
   # Matches found
   results = []
 
   # Search query
-  sq = f"{current_dir}/**/*{query}*"
+  c = pwd()
+  q = args["query"]
+  sq = f"{c}/**/*{q}*"
 
   # Make results case insensitive
   def either(c: str) -> str:
@@ -90,21 +87,21 @@ def get_results() -> List[str]:
 
     include = False
 
-    if result_type == "images":
+    if args["type"] == "images":
       include = is_type("image", f)
 
-    elif result_type == "videos":
+    elif args["type"] == "videos":
       include = is_type("video", f)
 
-    elif result_type == "audio":
+    elif args["type"] == "audio":
       include = is_type("audio", f)
 
-    elif result_type in "media":
+    elif args["type"] in "media":
       include = is_type("image", f) or \
                 is_type("video", f) or \
                 is_type("audio", f)
 
-    elif result_type == "all":
+    elif args["type"] == "all":
       include = True
   
     if include:
@@ -149,9 +146,7 @@ def process_results(results: List[str]) -> None:
 
 # Main function
 def main() -> None:
-  get_args()
-
-  results = get_results()
+  results = get_results(get_args())
     
   if len(results) > 0:
     process_results(results)
