@@ -1,6 +1,6 @@
 <img src="https://i.imgur.com/PyXJEqi.jpg" width="350">
 
-# Symbolic Link Snapshots
+# Symbolic Link Results
 
 If you go to a parent directory and run:  
 `python /path/to/symview.py images dinosaur`  
