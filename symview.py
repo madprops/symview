@@ -96,7 +96,7 @@ def get_results(args: Args) -> List[str]:
     elif args["type"] == "audio":
       include = is_type("audio", f)
 
-    elif args["type"] in "media":
+    elif args["type"] == "media":
       include = is_type("image", f) or \
                 is_type("video", f) or \
                 is_type("audio", f)
@@ -146,6 +146,12 @@ def process_results(results: List[str]) -> None:
 
 # Main function
 def main() -> None:
+  rp = results_path.strip()
+  
+  if rp == "" or rp == "/":
+    print("Make sure results_path is properly set.")
+    exit()
+
   results = get_results(get_args())
     
   if len(results) > 0:
