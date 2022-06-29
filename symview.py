@@ -65,15 +65,13 @@ def is_type(t, f):
   g = guess_type(f)[0]
   return g and g.startswith(t)
 
-# Main function
-def main() -> None:
-  get_args()
+# Get file matches
+def get_results() -> List[str]:
+  # Matches found
+  results = []
 
   # Search query
   sq = f"{current_dir}/**/*{query}*"
-
-  # Matches found
-  results = []
 
   # Make results case insensitive
   def either(c):
@@ -108,39 +106,51 @@ def main() -> None:
     if include:
         results.append(f)
         if len(results) >= max_results:
+          break  
+  
+  return results
+
+# Do operations with the matched files
+def process_results(results: List[str]) -> None:
+  rp = Path(results_path)
+
+  # Create results dir in /tmp
+  rp.mkdir(exist_ok = True)
+  
+  # Remove previous results
+  for f in glob(results_path + "/*"):
+    Path(f).unlink()
+
+  # Create the symlinks
+  for f in results:
+    src = Path(f)
+    link = rp / Path(f).name
+    
+    if link.exists():
+      name = "_" + Path(f).name
+      
+      # Fill numbers to the left until name is unique
+      for n in range(2, 22):
+        link = rp / Path(str(n) + name)
+        if not link.exists():
           break
+
+    if link.exists():
+      continue
+
+    link.symlink_to(src)
+
+  # Open the file manager
+  subprocess.call(["xdg-open", results_path])
+
+# Main function
+def main() -> None:
+  get_args()
+
+  results = get_results()
     
   if len(results) > 0:
-    rp = Path(results_path)
-
-    # Create results dir in /tmp
-    rp.mkdir(exist_ok = True)
-    
-    # Remove previous results
-    for f in glob(results_path + "/*"):
-      Path(f).unlink()
-
-    # Create the symlinks
-    for f in results:
-      src = Path(f)
-      link = rp / Path(f).name
-      
-      if link.exists():
-        name = "_" + Path(f).name
-        
-        # Fill numbers to the left until name is unique
-        for n in range(2, 22):
-          link = rp / Path(str(n) + name)
-          if not link.exists():
-            break
-
-      if link.exists():
-        continue
-
-      link.symlink_to(src)
-
-    # Open the file manager
-    subprocess.call(["xdg-open", results_path])
+    process_results(results)
   
 # Program starts here
 if __name__ == "__main__": main()
