@@ -5,7 +5,7 @@
 If you go to a parent directory and run:  
 `python /path/to/symview.py images dinosaur`  
 
-It performs a recursive file name search.  
+It performs a recursive filename search.  
 Then it checks the mimetype to check if it's of a certain type.  
 All the results (up to a max of 100) will be symlinked to /tmp/symview_results.  
 The symlink directory is opened with your file manager.  
