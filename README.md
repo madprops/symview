@@ -12,7 +12,7 @@ The symlink directory is opened with your file manager.
 Now you have linked files available to view and use.  
 It ignores directories with dots at the start.  
 It ignores directories and symlinks.  
-If no query is provided it asks with rofi.
+If no query is provided it asks for it with [rofi](https://github.com/davatorium/rofi).
 
 Valid result types: 
 * images
