@@ -41,9 +41,8 @@ def get_args() -> Args:
   result_type = argv[1]
 
   if result_type not in result_types:
-    s = " ".join(result_types)
-    print(f"'{result_type}' is not a valid result type.\nValid result types are: {s}")
-    exit()
+    s = ", ".join(result_types)
+    exit(f"'{result_type}' is not a valid result type.\nValid result types are: {s}.")
   
   if len(argv) < 3:
     query = get_input("Input Seach Query")
@@ -51,7 +50,7 @@ def get_args() -> Args:
     query = " ".join(argv[2:])
 
   if query == "":
-    exit()
+    exit("No query provided.")
 
   return {"type": result_type, "query": query}
 
@@ -149,8 +148,7 @@ def main() -> None:
   rp = results_path.strip()
   
   if not rp.startswith("/tmp/"):
-    print("Make sure results_path is properly set.")
-    exit()
+    exit("Make sure results_path is properly set.")
 
   results = get_results(get_args())
     
