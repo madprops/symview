@@ -70,6 +70,9 @@ def main() -> None:
   for f in glob("".join(map(either, query)), recursive = True):
     p = Path(f)
 
+    if p.is_dir() or p.is_symlink():
+      continue
+
     include = False
 
     if result_type == "images":
@@ -90,11 +93,9 @@ def main() -> None:
       include = True
   
     if include:
-      if p.is_file() and not p.is_symlink():
-        if f not in results:
-          results.append(f)
-          if len(results) >= max_results:
-            break
+        results.append(f)
+        if len(results) >= max_results:
+          break
     
   if len(results) > 0:
     rp = Path(results_path)
