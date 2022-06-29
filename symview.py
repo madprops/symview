@@ -4,13 +4,14 @@ from pathlib import Path
 from typing import List
 from glob import glob
 from mimetypes import guess_type
+from subprocess import Popen, PIPE
 import subprocess
 
 # Type of results
 result_type: str
 
-# Search keyword
-keyword: str
+# Search query
+query: str
 
 # Current working directory
 current_dir: str
@@ -28,13 +29,18 @@ results_path: str = "/tmp/symview_results"
 def clean_path(path: str) -> str:
   return path.rstrip("/")
 
+# Get input information using rofi
+def get_input(prompt: str) -> str:
+  proc = Popen(f"rofi -dmenu -p {prompt}", stdout=PIPE, stdin=PIPE, shell=True, text=True)
+  return proc.communicate()[0].strip()
+
 # Get arguments. Might exit here
 def get_args() -> None:
+  global query
   global result_type
-  global keyword
   global current_dir
 
-  if (len(argv) < 3):
+  if (len(argv) < 2):
     exit()
 
   result_type = argv[1]
@@ -43,8 +49,15 @@ def get_args() -> None:
     s = " ".join(result_types)
     print(f"{result_type} is not a valid result type.\nValid result types are: {s}")
     exit()
+  
+  if len(argv) < 3:
+    query = get_input("Input Seach Query")
+  else:
+    query = " ".join(argv[2:])
 
-  keyword = " ".join(argv[2:])
+  if query == "":
+    exit()
+
   current_dir = clean_path(str(getenv("PWD")))
 
 # Check if file is of a certain type
@@ -57,7 +70,7 @@ def main() -> None:
   get_args()
 
   # Search query
-  query = f"{current_dir}/**/*{keyword}*"
+  sq = f"{current_dir}/**/*{query}*"
 
   # Matches found
   results = []
@@ -67,7 +80,7 @@ def main() -> None:
     return "[%s%s]" % (c.lower(), c.upper()) if c.isalpha() else c
 
   # Search files recursively
-  for f in glob("".join(map(either, query)), recursive = True):
+  for f in glob("".join(map(either, sq)), recursive = True):
     p = Path(f)
 
     if p.is_dir() or p.is_symlink():
@@ -120,7 +133,7 @@ def main() -> None:
           link = rp / Path(str(n) + name)
           if not link.exists():
             break
-            
+
       if link.exists():
         continue
 

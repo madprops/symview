@@ -12,6 +12,7 @@ The symlink directory is opened with your file manager.
 Now you have linked files available to view and use.  
 It ignores directories with dots at the start.  
 It ignores directories and symlinks.
+If no query is provided it asks with rofi.
 
 Valid result types: 
 * images
@@ -38,4 +39,27 @@ end
 function m
   python /home/yo/code/symview/symview.py media "$argv"
 end
+```
+
+/home/yo/.local/share/applications/img.desktop:
+
+```
+[Desktop Entry]
+Version=1.0
+Name=img
+Comment=Find Images
+GenericName=img
+Exec=/home/yo/scripts/img.sh
+Icon=application-x-executable
+StartupNotify=true
+Terminal=false
+Type=Application
+```
+
+img script:
+
+```
+#!/usr/bin/env bash
+cd /media/storage2/pics/
+python /home/yo/code/symview/symview.py images
 ```
