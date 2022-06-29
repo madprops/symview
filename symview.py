@@ -61,9 +61,13 @@ def get_args() -> None:
   current_dir = clean_path(str(getenv("PWD")))
 
 # Check if file is of a certain type
-def is_type(t, f):
-  g = guess_type(f)[0]
-  return g and g.startswith(t)
+def is_type(t: str, f: str) -> bool:
+  try:
+    g = guess_type(f)[0]
+    if g is None: return False
+    return g.startswith(t)
+  except:
+    return False
 
 # Get file matches
 def get_results() -> List[str]:
@@ -74,7 +78,7 @@ def get_results() -> List[str]:
   sq = f"{current_dir}/**/*{query}*"
 
   # Make results case insensitive
-  def either(c):
+  def either(c: str) -> str:
     return "[%s%s]" % (c.lower(), c.upper()) if c.isalpha() else c
 
   # Search files recursively
