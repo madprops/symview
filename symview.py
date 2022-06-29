@@ -70,9 +70,9 @@ def get_results(args: Args) -> List[str]:
   results = []
 
   # Search query
-  c = pwd()
-  q = args["query"]
-  sq = f"{c}/**/*{q}*"
+  a = pwd()
+  b = args["query"]
+  sq = f"{a}/**/*{b}*"
 
   # Make results case insensitive
   def either(c: str) -> str:
