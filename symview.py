@@ -148,7 +148,7 @@ def process_results(results: List[str]) -> None:
 def main() -> None:
   rp = results_path.strip()
   
-  if rp == "" or rp == "/":
+  if not rp.startswith("/tmp/"):
     print("Make sure results_path is properly set.")
     exit()
 
