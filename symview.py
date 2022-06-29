@@ -112,13 +112,14 @@ def get_results(args: Args) -> List[str]:
 
 # Do operations with the matched files
 def process_results(results: List[str]) -> None:
-  rp = Path(results_path)
+  rpath = clean_path(results_path)
+  rp = Path(rpath)
 
   # Create results dir in /tmp
   rp.mkdir(exist_ok = True)
   
   # Remove previous results
-  for f in glob(results_path + "/*"):
+  for f in glob(rpath + "/*"):
     Path(f).unlink()
 
   # Create the symlinks
@@ -141,7 +142,7 @@ def process_results(results: List[str]) -> None:
     link.symlink_to(src)
 
   # Open the file manager
-  subprocess.call(["xdg-open", results_path])
+  subprocess.call(["xdg-open", rpath])
 
 # Main function
 def main() -> None:
