@@ -115,11 +115,12 @@ def main() -> None:
       if link.exists():
         name = "_" + Path(f).name
         
+        # Fill numbers to the left until name is unique
         for n in range(2, 22):
           link = rp / Path(str(n) + name)
           if not link.exists():
             break
-      
+            
       if link.exists():
         continue
 
