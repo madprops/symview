@@ -42,7 +42,7 @@ def get_args() -> Args:
 
   if result_type not in result_types:
     s = " ".join(result_types)
-    print(f"{result_type} is not a valid result type.\nValid result types are: {s}")
+    print(f"'{result_type}' is not a valid result type.\nValid result types are: {s}")
     exit()
   
   if len(argv) < 3:
