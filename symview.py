@@ -31,16 +31,24 @@ def get_input(prompt: str) -> str:
   proc = Popen(f"rofi -dmenu -p {prompt}", stdout=PIPE, stdin=PIPE, shell=True, text=True)
   return proc.communicate()[0].strip()
 
+# Print how to use it
+def print_help():
+  s = ", ".join(result_types)
+  print("Format: program [result_type] [filter]")
+  print(f"Result types: {s}")
+
+
 # Get arguments. Might exit here
 def get_args():
   if (len(argv) < 2):
-    exit()
+    print_help()
+    exit(1)
 
   result_type = argv[1]
 
   if result_type not in result_types:
-    s = ", ".join(result_types)
-    exit(f"'{result_type}' is not a valid result type.\nValid result types are: {s}.")
+    print_help()
+    exit(1)
   
   if len(argv) < 3:
     query = get_input("Input Seach Query")
@@ -48,7 +56,7 @@ def get_args():
     query = " ".join(argv[2:])
 
   if query == "":
-    exit("No query provided.")
+    exit()
 
   return {"type": result_type, "query": query}
 
