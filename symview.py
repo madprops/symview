@@ -5,11 +5,7 @@ from typing import List
 from glob import glob
 from mimetypes import guess_type
 from subprocess import Popen, PIPE
-from typing_extensions import TypedDict
 import subprocess
-
-# Arguments type declaration
-Args = TypedDict("Args", {"type": str, "query": str})
 
 # Max number of results
 max_results: int = 100
@@ -34,7 +30,7 @@ def get_input(prompt: str) -> str:
   return proc.communicate()[0].strip()
 
 # Get arguments. Might exit here
-def get_args() -> Args:
+def get_args():
   if (len(argv) < 2):
     exit()
 
@@ -64,7 +60,7 @@ def is_type(t: str, f: str) -> bool:
     return False
 
 # Get file matches
-def get_results(args: Args) -> List[str]:
+def get_results(args) -> List[str]:
   # Matches found
   results = []
 
