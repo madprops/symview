@@ -28,7 +28,7 @@ def pwd() -> str:
 
 # Get input information using rofi
 def get_input(prompt: str) -> str:
-  proc = Popen(f"rofi -dmenu -p {prompt}", stdout=PIPE, stdin=PIPE, shell=True, text=True)
+  proc = Popen(f"rofi -dmenu -p '{prompt}'", stdout=PIPE, stdin=PIPE, shell=True, text=True)
   return proc.communicate()[0].strip()
 
 # Print how to use it
