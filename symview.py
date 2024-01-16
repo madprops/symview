@@ -49,7 +49,7 @@ def get_args():
   if result_type not in result_types:
     print_help()
     exit(1)
-  
+
   if len(argv) < 3:
     query = get_input("Input Seach Query")
   else:
@@ -108,12 +108,12 @@ def get_results(args) -> List[str]:
 
     elif args["type"] == "all":
       include = True
-  
+
     if include:
         results.append(f)
         if len(results) >= max_results:
-          break  
-  
+          break
+
   return results
 
 # Do operations with the matched files
@@ -123,7 +123,7 @@ def process_results(results: List[str]) -> None:
 
   # Create results dir in /tmp
   rp.mkdir(exist_ok = True)
-  
+
   # Remove previous results
   for f in glob(rpath + "/*"):
     Path(f).unlink()
@@ -132,10 +132,10 @@ def process_results(results: List[str]) -> None:
   for f in results:
     src = Path(f)
     link = rp / Path(f).name
-    
+
     if link.exists():
       name = "_" + Path(f).name
-      
+
       # Fill numbers to the left until name is unique
       for n in range(2, 22):
         link = rp / Path(str(n) + name)
@@ -156,9 +156,9 @@ def main() -> None:
     exit("Make sure results_path is properly set.")
 
   results = get_results(get_args())
-    
+
   if len(results) > 0:
     process_results(results)
-  
+
 # Program starts here
 if __name__ == "__main__": main()
