@@ -10,7 +10,7 @@ from subprocess import Popen, PIPE
 import subprocess
 
 # Max number of results
-max_results: int = 100
+max_results: int = 1000
 
 # List of valid result types
 result_types: List[str] = ["images", "videos", "audio", "media", "all"]
