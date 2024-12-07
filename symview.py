@@ -37,7 +37,6 @@ def print_help():
   print("Format: program [result_type] [filter]")
   print(f"Result types: {s}")
 
-
 # Get arguments. Might exit here
 def get_args():
   if (len(argv) < 2):
